@@ -1,0 +1,1 @@
+{"uuid":"a63fb64e-8145-40e7-90ea-b8094035e0c7","name":"Scenario: Verify Delete User","children":["1f47c230-7472-41b5-8ea8-6de32e88dc85"],"befores":[{"name":"steps.TestInitialize.TestSetup()","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1663665368143,"stop":1663665368145}],"afters":[],"start":1663665368143,"stop":1663665368795}
