@@ -3,8 +3,10 @@ package steps;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.hamcrest.core.Is;
 
 import java.util.HashMap;
@@ -16,16 +18,24 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
 public class UserDataStep {
+    RequestSpecification request;
     Response response;
     Response byID;
-    Response  postCreate;
+    public UserDataStep() {
+        RestAssured.baseURI =  "https://dummyapi.io/data/v1";
+        request = RestAssured.given()
+                .header("app-id", "63283b9d74cc7198f1a385e6")
+                .header("Content-Type", "application/json");
+    }
 
 
     @Given("I perform Get Operation For {string}")
     public void iPerformGetOperationFor(String url) {
-        response = given().contentType(ContentType.JSON)
-                .header("app-id", "63283b9d74cc7198f1a385e6").
-                when().get("https://dummyapi.io/data/v1/user");
+        response = request.
+//                given().contentType(ContentType.JSON)
+//                   .header("app-id", "63283b9d74cc7198f1a385e6").
+//                    when()
+                   get("/user");
     }
 
     @And("I perform GET For the list of user by{string}")
@@ -40,13 +50,13 @@ public class UserDataStep {
 
     @Given("I perform Get Operation For query parameter {string}")
     public void iPerformGetOperationForQueryParameter(String id) {
-    byID = (Response) given()
-                     .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
-                     .
-                when()
-                     .get("https://dummyapi.io/data/v1/user/60d0fe4f5311236168a109ca").
-                then()
-             .extract().response();
+   byID = (Response)request
+//    given()
+//    .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
+//   .when()
+                     .get("/user/60d0fe4f5311236168a109ca");
+//                      .then()
+//                     .extract().response();
     }
 
     @Then("I should see  list of user by registration date")
@@ -60,17 +70,17 @@ public class UserDataStep {
                 HashMap<String ,String> postContent = new HashMap<>();
          postContent.put("firstName","tufyal");
         postContent.put("lastName","ahmmed");
-        postContent.put("email","aahaaaaaammed@example.com");
+        postContent.put("email","qaahaaaaaammed@example.com");
 
-        response =
-                given()
-                .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
-                        .with()
-                .body(postContent).
-                when()
-                .post("https://dummyapi.io/data/v1/user/create").
-                then()
-               .extract().response();
+       response =request
+//        given()
+//                        .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
+//                        .with()
+                        .body(postContent).
+                        when()
+                        .post("/v1/user/create");
+//                        .then()
+//                        .extract().response();
     }
 
     @Then("I should see the created data")
@@ -83,18 +93,18 @@ public class UserDataStep {
     public void iShouldPerformUpdateUserDataByID() {
         HashMap<String ,String> postContent = new HashMap<>();
 //        postContent.put("id","6329460cb8cd810e77621d14");
-        postContent.put("firstName","tuf");
+        postContent.put("firstName","atuf");
         postContent.put("lastName","yal Aahmmed");
         //postContent.put("email","ahaaaaammed@example.com");
-        response =
-                given()
-                        .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
-                        .with()
+        response = request
+//                given()
+//                        .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
+//                        .with()
                         .body(postContent).
                         when()
-                        .put("https://dummyapi.io/data/v1/user/632956b63a858753add015d0/").
-                        then()
-                        .extract().response();
+                        .put("/user/632ab2f80dc51c7bed5a7b5c/");
+//        .then()
+//                        .extract().response();
     }
 
     @Then("I should return Updated Data")
@@ -104,16 +114,15 @@ public class UserDataStep {
     }
     @Given("I should perform Delete Data")
     public void iShouldPerformDeleteData() {
-        response =
-                (Response)
-                given()
-                        .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
-                        . when()
-                        .delete("https://dummyapi.io/data/v1/user/632956b63a858753add015d0/")
-                      .then()
-//                        .statusCode(204)
-//                        .log().all();
-                        .extract().response();
+        response = (Response) request
+//                given()
+//                        .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
+//                        . when()
+                        .delete("/user/632ab2f80dc51c7bed5a7b5c/");
+//                        .then()
+////                        .statusCode(204)
+////                        .log().all();
+//                        .extract().response();
     }
     @Then("i Should return Deleted data with status")
     public void iShouldReturnDeletedDataWithStatus() {

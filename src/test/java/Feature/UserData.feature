@@ -12,12 +12,12 @@ Feature:User Data
     Given I perform POST Operation for first name last name and email
     Then I should see the created data
 
-    Scenario:Verify Update user
-      Given I should perform update user data by ID
-      Then I should return Updated Data
+  Scenario:Verify Update user
+    Given I should perform update user data by ID
+    Then I should return Updated Data
 
-      Scenario:Verify Delete User
-        Given I should perform Delete Data
-        Then i Should return Deleted data with status
+  Scenario:Verify Delete User
+    Given I should perform Delete Data
+    Then i Should return Deleted data with status
 
 

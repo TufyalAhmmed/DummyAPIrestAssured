@@ -2,22 +2,34 @@ package steps;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 import java.util.HashMap;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class PostDataSteps {
+
+    RequestSpecification request;
     Response response;
+    public PostDataSteps() {
+        RestAssured.baseURI =  "https://dummyapi.io/data/v1";
+        request = RestAssured.given()
+                .header("app-id", "63283b9d74cc7198f1a385e6")
+                .header("Content-Type", "application/json");
+    }
+
     @Given("I perform GET operation for {string} by Creation date")
     public void iPerformGETOperationForByCreationDate(String url) {
-        response = given().contentType(ContentType.JSON)
-                .header("app-id", "63283b9d74cc7198f1a385e6").
-                when().get("https://dummyapi.io/data/v1/post/");
+        response = request
+//                given().contentType(ContentType.JSON)
+//                    .header("app-id", "63283b9d74cc7198f1a385e6").
+//                    when()
+                    .get("/post/");
     }
     @Then("I should see the Get list")
     public void iShouldSeeTheGetList() {
@@ -27,12 +39,13 @@ public class PostDataSteps {
 
     @Given("Get list of posts for specific user sorted by creation date.")
     public void getListOfPostsForSpecificUserSortedByCreationDate() {
-       response = (Response) given()
-                .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
-                .when()
-                .get("https://dummyapi.io/data/v1/user/60d0fe4f5311236168a109ca/post/")
-                .then()
-                .extract().response();
+       response = (Response) request
+//               given()
+//                .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
+//                .when()
+                .get("/user/60d0fe4f5311236168a109ca/post/");
+//                .then()
+//                .extract().response();
     }
 
     @Then("I should see the get list by user")
@@ -43,12 +56,13 @@ public class PostDataSteps {
 
     @Given("I perform GET operation for the list created by {string}")
     public void iPerformGETOperationForTheListCreatedBy(String url) {
-        response = (Response) given()
-                .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
-                .when()
-                .get("https://dummyapi.io/data/v1/tag/60d0fe4f5311236168a109ca/post/")
-                .then()
-                .extract().response();
+        response = (Response) request
+//                given()
+//                .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
+//                .when()
+                .get("/tag/60d0fe4f5311236168a109ca/post/");
+//                .then()
+//                .extract().response();
     }
 
     @Then("I should see the get liSt by Tag")
@@ -59,12 +73,13 @@ public class PostDataSteps {
 
     @Given("I perform GET operation for the full data of a post id")
     public void iPerformGETOperationForTheFullDataOfAPostId() {
-        response = (Response) given()
-                .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
-                .when()
-                .get("https://dummyapi.io/data/v1/post/60d21b4667d0d8992e610c85/")
-                .then()
-                .extract().response();
+        response = (Response) request
+//                given()
+//                .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
+//                .when()
+                .get("/post/60d21b4667d0d8992e610c85/");
+//                .then()
+//                .extract().response();
     }
 
     @Then("I should see the data by post id")
@@ -82,15 +97,15 @@ public class PostDataSteps {
         postContent.put("tags","[\"animel\",dog\"]");
         postContent.put("owner","60d0fe4f5311236168a109ca");
 
-        response =
-                given()
-                        .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
+        response = (Response) request
+        //given()
+                       // .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
                         .with()
-                        .body(postContent).
-                        when()
-                        .post("https://dummyapi.io/data/v1/post/create").
-                        then()
-                        .extract().response();
+                        .body(postContent)
+                       // when()
+                        .post("/post/create");
+//                .then()
+//                        .extract().response();
     }
 
     @Then("I should see the created post data")
@@ -108,15 +123,15 @@ public class PostDataSteps {
         postContent.put("tags","[\"animel\",dog\"]");
        // postContent.put("owner","60d0fe4f5311236168a109ca");
 
-        response =
-                given()
-                        .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
+        response = request
+               // given()
+               //         .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
                         .with()
-                        .body(postContent).
-                        when()
-                        .put("https://dummyapi.io/data/v1/post/63296a86300dfa5a8d1d1c15/").
-                        then()
-                        .extract().response();
+                        .body(postContent)
+                       // when()
+                        .put("/post/63296a86300dfa5a8d1d1c15/");
+//     //   . then()
+//                        .extract().response();
     }
 
     @Then("I should return Updated post Data")
@@ -127,16 +142,16 @@ public class PostDataSteps {
 
     @Given("I should perform Delete post Data by id")
     public void iShouldPerformDeletePostDataById() {
-        response =
-                (Response)
-                        given()
-                                .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
-                                . when()
-                                .delete("https://dummyapi.io/data/v1/post/60d0fe4f5311236168a109ca/")
-                                .then()
-//                        .statusCode(204)
-//                        .log().all();
-                                .extract().response();
+        response =(Response) request
+
+                      //  given()
+                             //   .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
+                                //. when()
+                                .delete("/post/60d0fe4f5311236168a109ca/");
+//                                .then()
+////                        .statusCode(204)
+////                        .log().all();
+//                                .extract().response();
     }
 
     @Then("i Should return Deleted data for the id")
