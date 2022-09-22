@@ -1,0 +1,1 @@
+{"uuid":"1adbfeaf-d1e8-4b56-a766-3a9a68fb26e3","name":"Scenario: Verify Get Post List","children":["ac14b252-6a47-4bed-982b-bf39170ee40d"],"befores":[{"name":"steps.TestInitialize.TestSetup()","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1663742523576,"stop":1663742524225}],"afters":[],"start":1663742523525,"stop":1663742526127}

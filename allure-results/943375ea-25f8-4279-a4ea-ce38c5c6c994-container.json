@@ -1,0 +1,1 @@
+{"uuid":"943375ea-25f8-4279-a4ea-ce38c5c6c994","name":"Scenario: Verify Create User","children":["dcf9a50f-5304-4d1a-9431-3c8efac93fdc"],"befores":[{"name":"steps.TestInitialize.TestSetup()","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1663742532070,"stop":1663742532070}],"afters":[],"start":1663742532070,"stop":1663742533162}

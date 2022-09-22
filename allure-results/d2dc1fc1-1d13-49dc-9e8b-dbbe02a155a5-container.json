@@ -1,0 +1,1 @@
+{"uuid":"d2dc1fc1-1d13-49dc-9e8b-dbbe02a155a5","name":"Scenario: Verify Get List by User","children":["fdad8c71-db21-4347-b894-c1796d643104"],"befores":[{"name":"steps.TestInitialize.TestSetup()","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1663742526200,"stop":1663742526200}],"afters":[],"start":1663742526184,"stop":1663742526949}
