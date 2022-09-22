@@ -21,8 +21,9 @@ public class UserDataStep {
     RequestSpecification request;
     Response response;
     Response byID;
+
     public UserDataStep() {
-        RestAssured.baseURI =  "https://dummyapi.io/data/v1";
+        RestAssured.baseURI = "https://dummyapi.io/data/v1";
         request = RestAssured.given()
                 .header("app-id", "63283b9d74cc7198f1a385e6")
                 .header("Content-Type", "application/json");
@@ -35,7 +36,7 @@ public class UserDataStep {
 //                given().contentType(ContentType.JSON)
 //                   .header("app-id", "63283b9d74cc7198f1a385e6").
 //                    when()
-                   get("/user");
+        get("/user");
     }
 
     @And("I perform GET For the list of user by{string}")
@@ -50,83 +51,85 @@ public class UserDataStep {
 
     @Given("I perform Get Operation For query parameter {string}")
     public void iPerformGetOperationForQueryParameter(String id) {
-   byID = (Response)request
+        byID = (Response) request
 //    given()
 //    .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
 //   .when()
-                     .get("/user/60d0fe4f5311236168a109ca");
+                .get("/user/60d0fe4f5311236168a109ca");
 //                      .then()
 //                     .extract().response();
     }
 
     @Then("I should see  list of user by registration date")
     public void iShouldSeeListOfUserByRegistrationDate() {
-        assertThat(byID.getStatusCode(),is(200));
+        assertThat(byID.getStatusCode(), is(200));
         System.out.println(byID.asString());
     }
 
     @Given("I perform POST Operation for first name last name and email")
     public void iPerformPOSTOperationForFirstNameLastNameAndEmail() {
-                HashMap<String ,String> postContent = new HashMap<>();
-         postContent.put("firstName","tufyal");
-        postContent.put("lastName","ahmmed");
-        postContent.put("email","qaahaaaaaammed@example.com");
+        HashMap<String, String> postContent = new HashMap<>();
+        postContent.put("firstName", "tufyal");
+        postContent.put("lastName", "ahmmed");
+        postContent.put("email", "qaahaaaaaammed@example.com");
 
-       response =request
+        response = request
 //        given()
 //                        .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
-//                        .with()
-                        .body(postContent).
-                        when()
-                        .post("/v1/user/create");
+                        .with()
+                .body(postContent).
+                when()
+                .post("/user/create");
 //                        .then()
 //                        .extract().response();
     }
 
     @Then("I should see the created data")
     public void iShouldSeeTheCreatedData() {
-        assertThat(response.getStatusCode(),is(200));
-     System.out.println(response.asString());
+        assertThat(response.getStatusCode(), is(200));
+        System.out.println(response.asString());
     }
 
     @Given("I should perform update user data by ID")
     public void iShouldPerformUpdateUserDataByID() {
-        HashMap<String ,String> postContent = new HashMap<>();
+        HashMap<String, String> postContent = new HashMap<>();
 //        postContent.put("id","6329460cb8cd810e77621d14");
-        postContent.put("firstName","atuf");
-        postContent.put("lastName","yal Aahmmed");
+        postContent.put("firstName", "atuf");
+        postContent.put("lastName", "yal Aahmmed");
         //postContent.put("email","ahaaaaammed@example.com");
         response = request
 //                given()
 //                        .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
-//                        .with()
-                        .body(postContent).
-                        when()
-                        .put("/user/632ab2f80dc51c7bed5a7b5c/");
+                .with()
+                .body(postContent).
+                when()
+                .put("/user/632ab2f80dc51c7bed5a7b5c/");
 //        .then()
 //                        .extract().response();
     }
 
     @Then("I should return Updated Data")
     public void iShouldReturnUpdatedData() {
-        assertThat(response.getStatusCode(),is(200));
+        assertThat(response.getStatusCode(), is(200));
         System.out.println(response.asString());
     }
+
     @Given("I should perform Delete Data")
     public void iShouldPerformDeleteData() {
         response = (Response) request
 //                given()
 //                        .contentType(ContentType.JSON).header("app-id", "63283b9d74cc7198f1a385e6")
 //                        . when()
-                        .delete("/user/632ab2f80dc51c7bed5a7b5c/");
+                .delete("/user/632ab2f80dc51c7bed5a7b5c/");
 //                        .then()
 ////                        .statusCode(204)
 ////                        .log().all();
 //                        .extract().response();
     }
+
     @Then("i Should return Deleted data with status")
     public void iShouldReturnDeletedDataWithStatus() {
-        assertThat(response.getStatusCode(),is(204));
+        assertThat(response.getStatusCode(), is(200));
         System.out.println(response.asString());
     }
 }
